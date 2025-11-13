@@ -1,0 +1,82 @@
+#include <Arduino.h>
+#include <WiFi.h>
+#include <WebServer.h>
+
+
+const char* hotspot="useless2";
+const char* password="#arystoteles54";
+
+WebServer server(80);
+
+int lampka1=22;
+int lampka2=23;
+
+bool stan1=false;
+bool stan2=false;
+
+
+void handleRoot(){
+    String html="<h1>Sterowanie lampkami</h1>";
+    html=html + "<p><a href=\"/lampka1\">Wlacz/Wylacz lampke1</a></p>";
+    html+="<p><a href=\"/lampka2\">Wlacz/Wylacz lampke2</a></p>";
+    server.send(200,"text/html",html);
+}
+
+
+void handleLampka1(){
+    stan1 = !stan1;
+    if(stan1){
+        digitalWrite(lampka1,HIGH);
+    }
+    else{
+        digitalWrite(lampka1,LOW);
+    }
+    handleRoot();
+}
+
+void handleLampka2(){
+    stan2 = !stan2;
+    digitalWrite(lampka2, stan2 ? HIGH : LOW);
+    handleRoot();
+
+}
+
+
+void setup(){
+    Serial.begin(9600);
+    pinMode(lampka1, OUTPUT);
+    pinMode(lampka2, OUTPUT);
+    WiFi.begin(hotspot,password);
+
+
+    while(WiFi.status()!=WL_CONNECTED){
+        delay(500);
+        Serial.print(".");
+    }
+
+    Serial.println(" ");
+    Serial.println("Polaczono!");
+    Serial.print("Adres IP ESP32: ");
+    Serial.println(WiFi.localIP());
+
+    server.on("/",handleRoot);
+    server.on("/lampka1",handleLampka1);
+    server.on("/lampka2",handleLampka2);
+
+    server.begin();
+    Serial.println("serwer uruchomiony");
+
+    
+
+
+}
+
+
+
+
+
+void loop(){
+    
+    server.handleClient();
+
+}
