@@ -1,0 +1,32 @@
+{
+	"folders": [
+		{
+			"path": "../Projekt1"
+		},
+		{
+			"name": "RTO8",
+			"path": "../RTO8"
+		},
+		{
+			"name": "RTO9",
+			"path": "../RTO9"
+		},
+		{
+			"name": "RTO10",
+			"path": "../RTO10"
+		},
+		{
+			"name": "RTO-10",
+			"path": "../RTO-10"
+		},
+		{
+			"name": "SWBprojekt",
+			"path": "."
+		},
+		{
+			"name": "RTOprojekt2",
+			"path": "../RTOprojekt2"
+		}
+	],
+	"settings": {}
+}
